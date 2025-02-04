@@ -1,4 +1,7 @@
 # project-rs
+```vbnet
+' これは VB.NET のコードです
+
 
 
 
@@ -31,3 +34,4 @@ Public Class Form1
         End If
     End Sub
 End Class
+```
