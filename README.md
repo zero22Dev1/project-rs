@@ -2,7 +2,34 @@
 ```vbnet
 ' これは VB.NET のコードです
 
+Public Class Form1
+    ' フォームのロード時にDateTimePickerを初期化
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitializeDateTimePicker()
+    End Sub
 
+    ' DateTimePickerの初期化（空白にする）
+    Private Sub InitializeDateTimePicker()
+        DateTimePicker1.Format = DateTimePickerFormat.Custom
+        DateTimePicker1.CustomFormat = "" ' 初期状態を空白にする
+        DateTimePicker1.ShowCheckBox = False ' チェックボックスを非表示
+    End Sub
+
+    ' ユーザーがクリックorフォーカスしたら通常のフォーマットに変更
+    Private Sub DateTimePicker1_Enter(sender As Object, e As EventArgs) Handles DateTimePicker1.Enter
+        If DateTimePicker1.CustomFormat = "" Then
+            DateTimePicker1.CustomFormat = "yyyy/MM/dd" ' 編集可能にする
+        End If
+    End Sub
+
+    ' キーボードのDeleteキーで日付を削除（空白状態に戻す）
+    Private Sub DateTimePicker1_KeyDown(sender As Object, e As KeyEventArgs) Handles DateTimePicker1.KeyDown
+        If e.KeyCode = Keys.Delete OrElse e.KeyCode = Keys.Back Then
+            InitializeDateTimePicker() ' 初期状態（空白）に戻す
+            e.SuppressKeyPress = True ' 不要な動作を防ぐ
+        End If
+    End Sub
+End Class
 
 
 Public Class Form1
