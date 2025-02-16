@@ -1,64 +1,15 @@
 # project-rs
 ```vbnet
 ' これは VB.NET のコードです
+' 現在の日付の "yyyy/MM" 形式の文字列
+Dim dateString As String = DateTime.Now.ToString("yyyy/MM")
 
-Public Class Form1
-    ' フォームのロード時にDateTimePickerを初期化
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeDateTimePicker()
-    End Sub
+' 文字列を Date 型に変換（1日を仮でセット）
+Dim parsedDate As Date = DateTime.ParseExact(dateString & "/01", "yyyy/MM/dd", Nothing)
 
-    ' DateTimePickerの初期化（空白にする）
-    Private Sub InitializeDateTimePicker()
-        DateTimePicker1.Format = DateTimePickerFormat.Custom
-        DateTimePicker1.CustomFormat = "" ' 初期状態を空白にする
-        DateTimePicker1.ShowCheckBox = False ' チェックボックスを非表示
-    End Sub
-
-    ' ユーザーがクリックorフォーカスしたら通常のフォーマットに変更
-    Private Sub DateTimePicker1_Enter(sender As Object, e As EventArgs) Handles DateTimePicker1.Enter
-        If DateTimePicker1.CustomFormat = "" Then
-            DateTimePicker1.CustomFormat = "yyyy/MM/dd" ' 編集可能にする
-        End If
-    End Sub
-
-    ' キーボードのDeleteキーで日付を削除（空白状態に戻す）
-    Private Sub DateTimePicker1_KeyDown(sender As Object, e As KeyEventArgs) Handles DateTimePicker1.KeyDown
-        If e.KeyCode = Keys.Delete OrElse e.KeyCode = Keys.Back Then
-            InitializeDateTimePicker() ' 初期状態（空白）に戻す
-            e.SuppressKeyPress = True ' 不要な動作を防ぐ
-        End If
-    End Sub
-End Class
-
-
-Public Class Form1
-    ' フォームのロード時にDateTimePickerを初期化
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeDateTimePicker()
-    End Sub
-
-    ' DateTimePickerの初期化（空白にする）
-    Private Sub InitializeDateTimePicker()
-        DateTimePicker1.Format = DateTimePickerFormat.Custom
-        DateTimePicker1.CustomFormat = "" ' 初期状態を空白に
-        DateTimePicker1.ShowCheckBox = False ' チェックボックスを非表示
-    End Sub
-
-    ' ユーザーが入力しようとしたら通常の日付フォーマットを適用
-    Private Sub DateTimePicker1_Enter(sender As Object, e As EventArgs) Handles DateTimePicker1.Enter
-        If DateTimePicker1.CustomFormat = "" Then
-            DateTimePicker1.CustomFormat = "yyyy/MM/dd" ' 編集可能にする
-            DateTimePicker1.Value = DateTime.Now ' 現在の日付をセット
-        End If
-    End Sub
-
-    ' Deleteキーで日付を削除
-    Private Sub DateTimePicker1_KeyDown(sender As Object, e As KeyEventArgs) Handles DateTimePicker1.KeyDown
-        If e.KeyCode = Keys.Delete Then
-            InitializeDateTimePicker() ' 初期状態に戻す
-            e.SuppressKeyPress = True ' 不要な動作を防ぐ
-        End If
-    End Sub
-End Class
-```
+' C1DateTimePicker の設定
+With C1DateTimePicker1
+    .Value = parsedDate         ' 値をセット
+    .FormatType = C1.Win.C1Input.FormatTypeEnum.CustomFormat ' カスタムフォーマットを使用
+    .CustomFormat = "yyyy/MM"   ' "yyyy/MM" 形式で表示
+End With
